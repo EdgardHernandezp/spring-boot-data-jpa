@@ -49,7 +49,7 @@ public class ClienteController {
 
 		clienteDAO.save(cliente);
 		status.setComplete();
-		return "redirect:listar";
+		return "redirect:/listar";
 	}
 
 	@GetMapping(value = "/form/{id}")
@@ -65,5 +65,13 @@ public class ClienteController {
 		model.addAttribute("titulo", "Editar Cliente");
 		
 		return "form";
+	}
+	
+	@GetMapping(value ="/delete/{id}")
+	public String eliminar(@PathVariable(value = "id") Long id) {
+		if (id > 0)
+			clienteDAO.delete(id);
+		
+		return "redirect:/listar";
 	}
 }

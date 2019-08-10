@@ -11,4 +11,6 @@ public interface IClienteDAO {
 	public void save(Cliente cliente);
 	
 	public Cliente findOne(long id);
+	
+	public void delete(long id);
 }
