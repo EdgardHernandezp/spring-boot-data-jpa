@@ -11,11 +11,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.bolsadeideas.springboot.app.models.dao.IClienteDAO;
 import com.bolsadeideas.springboot.app.models.entity.Cliente;
 
 @Controller
+@SessionAttributes("cliente")
 public class ClienteController {
 
 	@Autowired
@@ -38,13 +41,14 @@ public class ClienteController {
 	}
 
 	@PostMapping(value = "/form")
-	public String guardar(@Valid Cliente cliente, BindingResult result, Model model) {
+	public String guardar(@Valid Cliente cliente, BindingResult result, Model model, SessionStatus status) {
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Listado de Clientes");
 			return "form";
 		}
 
 		clienteDAO.save(cliente);
+		status.setComplete();
 		return "redirect:listar";
 	}
 
